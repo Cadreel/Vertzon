@@ -29,7 +29,7 @@ public class UsuarioService implements Serializable {
 			throw new NegocioException("A senha é obrigatório");
 		}
 		if(usuario.getRole() == null) {
-			usuario.setRole(Role.USER);
+			usuario.setRole(Role.ADMIN);
 		}
 		
 		this.usuarioDAO.salvar(usuario);

@@ -48,7 +48,7 @@ public class CadastroUsuarioBean implements Serializable{
 			FacesUtil.addErrorMessage(e.getMessage());
 		}catch(PersistenceException e) {
 			if(e.getMessage().contains("ConstraintViolationException")) {
-				FacesUtil.addErrorMessage("Duplicado");
+				FacesUtil.addErrorMessage("Email ou Login Duplicado");
 				if(e.getMessage().contains("uk_login")) {
 					FacesUtil.addErrorMessage("Login igual");
 				}
