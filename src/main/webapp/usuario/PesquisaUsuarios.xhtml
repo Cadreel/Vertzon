@@ -1,0 +1,62 @@
+<ui:composition template="/WEB-INF/template/LayoutPadrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+
+    <ui:define name="titulo">Pesquisa de Usuários</ui:define>
+    
+    <ui:define name="corpo">
+    	<h1>Pesquisa de Usuários</h1>
+    	
+    	<h:form id="frmPesquisa">
+    		<p:messages id="messages" autoUpdate="true" closable="true" />
+    		
+    		<p:toolbar style="margin-top: 20px">
+    			<p:toolbarGroup>
+    				<p:commandButton value="Novo" id="botaoNovo" action="/usuario/CadastroUsuario.xhtml" />
+    			</p:toolbarGroup>
+    		</p:toolbar>
+    	
+	    	<p:dataTable id="usuarioTable" value="#{pesquisaUsuarioBean.usuarios}" var="usuario"
+		    		style="margin-top: 20px" emptyMessage="Nenhum usuário encontrado." rows="20"
+		    		paginator="true" paginatorAlwaysVisible="false" paginatorPosition="bottom">
+		    		<p:column headerText="Código" style="text-align: center; width: 100px">
+		    			<h:outputText value="#{usuario.codigo}" />
+		    		</p:column>
+		    		<p:column headerText="Login Usuário">
+		    			<h:outputText value="#{usuario.login}" />
+		    		</p:column>
+		    		<p:column headerText="E-mail Usuário">
+		    			<h:outputText value="#{usuario.email}" />
+		    		</p:column>
+		    		<p:column headerText="Nível de Acesso">
+		    			<h:outputText value="#{usuario.role}" />
+		    		</p:column>
+		    		
+		    		<p:column style="width: 100px; text-align: center">
+		    			<p:button outcome="CadastroUsuario" icon="ui-icon-pencil" title="Editar" >
+		    				<f:param name="usuario" value="#{usuario.codigo}"/>
+		    			</p:button>
+		    			<p:commandButton icon="ui-icon-trash" title="Excluir" oncomplete="confirmacaoExclusao.show()"
+								process="@this" update=":frmPesquisa:confirmacaoExclusaoDialog" >
+							<f:setPropertyActionListener target="#{pesquisaUsuarioBean.usuarioSelecionado}" value="#{usuario}" />
+						</p:commandButton>
+		    		</p:column>
+		    </p:dataTable>
+		   
+		    <p:confirmDialog id="confirmacaoExclusaoDialog" widgetVar="confirmacaoExclusao"
+	        		message="Tem certeza que deseja excluir o usuário #{pesquisaUsuarioBean.usuarioSelecionado.login} com o 
+	        		e-mail #{pesquisaUsuarioBean.usuarioSelecionado.email}?"  
+	                header="Exclusão de usuário" severity="alert">        	
+	        	<p:commandButton value="Sim" update=":frmPesquisa:usuarioTable"
+	        			onclick="confirmacaoExclusao.hide()" action="#{pesquisaUsuarioBean.excluir}" />
+	        	<p:button value="Não" onclick="confirmacaoExclusao.hide(); return false;" />
+	    	</p:confirmDialog>
+	    	
+	    	
+	    	
+	    </h:form>
+    </ui:define>
+</ui:composition>

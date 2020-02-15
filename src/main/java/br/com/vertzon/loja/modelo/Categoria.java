@@ -1,0 +1,13 @@
+package br.com.vertzon.loja.modelo;
+
+public enum Categoria {
+	DESENVOLVIMENTO,
+	SUPORTE_TECNICO,
+	PROJETOS_FISCAIS,
+	WEB_DESING,
+	OUTSOURCING,
+	CURSO,
+	EQUIPAMENTOS,
+	CYBER_SEGURANCA
+	
+}
